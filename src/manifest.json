@@ -29,5 +29,8 @@
 			"matches": ["*://*/*"]
 		}
 	],
+	"web_accessible_resources": [
+		"styles.css"
+	],
 	"manifest_version": 2
 }

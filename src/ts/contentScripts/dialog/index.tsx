@@ -1,18 +1,30 @@
-import * as React from 'react';
+import React from 'react';
+import { v4 as uuid } from 'uuid';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Store } from 'webext-redux';
-import ThesaurusApp from './containers/ThesaurusApp';
+import App from './containers/App';
+import { IDialogMessage } from './IMessage';
+import { createDomAnchor, removeDomAnchor } from '../../scripts/dom';
 
-import { createDomAnchor } from '../../scripts/dom';
-
-createDomAnchor('dialog-root');
+const id = uuid();
 const store = new Store();
+const styles = chrome.extension.getURL("styles.css");
 
-store.ready().then(() => {
-	ReactDOM.render(
-		<Provider store={store}>
-			<ThesaurusApp />
-		</Provider>
-		, document.getElementById('dialog-root'));
+chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
+	switch(request.dialog) {
+	case 'OPEN':
+		removeDomAnchor(id);
+		const elem = createDomAnchor(id, styles);
+		await store.ready();
+		ReactDOM.render(
+			<Provider store={store}>
+				<App dialogId={id} />
+			</Provider>
+			, elem);
+		break;
+	case 'CLOSE':
+		removeDomAnchor(id);
+		break;
+	}
 });

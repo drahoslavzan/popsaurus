@@ -43,7 +43,7 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{ test: /\.(js|ts|tsx)?$/, loader: 'awesome-typescript-loader', exclude: /node_modules/ },
+			{ test: /\.(js|ts|tsx)?$/, loader: 'awesome-typescript-loader', exclude: /node_modules/ }
 		]
 	},
 	plugins: [
@@ -60,6 +60,11 @@ module.exports = {
 				from: path.join(sourceRootPath, 'assets'),
 				to: path.join(distRootPath, 'assets'),
 				test: /\.(jpg|jpeg|png|gif|svg)?$/,
+			},
+			{
+				from: path.join(sourceRootPath, 'css', 'styles.css'),
+				to: path.join(distRootPath, 'styles.css'),
+				toType: 'file',
 			},
 			{
 				from: path.join(sourceRootPath, 'manifest.json'),
