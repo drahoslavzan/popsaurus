@@ -1,24 +1,25 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import styled, { ThemeProvider } from 'styled-components';
 import { IAppState } from '../../../background/store';
 import { themes, ThemeTypes } from '../../../components/styles/themes';
-import Counter from '../../../containers/Counter';
+import { IDefinition } from '../../../api/ThesaurusApi';
 
 interface ICounterApp {
 	theme: ThemeTypes;
+	loading: boolean,
+	definitions: IDefinition[],
 	dispatch: Dispatch;
 }
 
-class CounterApp extends React.Component<ICounterApp> {
-
+class ThesaurusApp extends React.Component<ICounterApp> {
 	render() {
 		return (
 			<ThemeProvider theme={themes[this.props.theme]}>
 				<React.Fragment>
 					<CounterAppContainer >
-						<Counter />
+						clicks {this.props.loading}
 					</CounterAppContainer>
 				</React.Fragment>
 			</ThemeProvider>
@@ -27,12 +28,15 @@ class CounterApp extends React.Component<ICounterApp> {
 }
 
 const mapStateToProps = (state: IAppState) => {
+	console.log(state)
 	return {
-		theme: state.settings.theme
+		theme: state.settings.theme,
+		loading: state.data.loading,
+		definitions: state.data.definitions,
 	};
 };
 
-export default connect(mapStateToProps)(CounterApp);
+export default connect(mapStateToProps)(ThesaurusApp);
 
 const CounterAppContainer = styled('div')`
 	position: fixed;

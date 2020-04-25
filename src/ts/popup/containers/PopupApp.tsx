@@ -5,7 +5,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import { IAppState } from '../../background/store';
 import GlobalStyle from '../../components/styles/GlobalStyle';
 import { themes, ThemeTypes } from '../../components/styles/themes';
-import Counter from '../../containers/Counter';
 
 interface IPopupApp {
 	theme: ThemeTypes;
@@ -20,7 +19,7 @@ class PopupApp extends React.Component<IPopupApp> {
 				<React.Fragment>
 					<GlobalStyle />
 					<PopupAppContainer>
-						<Counter />
+						TODO
 					</PopupAppContainer>
 				</React.Fragment>
 			</ThemeProvider>
@@ -30,7 +29,7 @@ class PopupApp extends React.Component<IPopupApp> {
 
 const mapStateToProps = (state: IAppState) => {
 	return {
-		theme: state.settings.theme
+		theme: state.settings.theme,
 	};
 };
 
