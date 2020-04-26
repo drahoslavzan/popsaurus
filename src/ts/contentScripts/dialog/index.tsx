@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { StyleSheetManager } from 'styled-components';
 import { Store } from 'webext-redux';
 import App from './containers/App';
-import { IDialogMessage } from './IMessage';
+import { IDialogMessage } from '../IMessage';
 import { createDomAnchor, removeDomAnchor } from '../../scripts/dom';
 
 const id = uuid();

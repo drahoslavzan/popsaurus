@@ -19,6 +19,7 @@ const contentScripts = locateContentScripts(contentScriptsPath);
 const extensionReloader = nodeEnv === 'watch' ? new ExtensionReloader({
 	port: 9128,
 	reloadPage: true,
+	manifest: path.join(sourceRootPath, 'manifest.json'),
 	entries: {
 		background: 'background',
 		extensionPage: ['popup'],
@@ -78,6 +79,6 @@ module.exports = {
 			'WEB_BROWSER': JSON.stringify(webBrowser),
 		}),
 		extensionReloader,
-		new CleanWebpackPlugin(),
+		cleanWebpackPlugin
 	],
 }

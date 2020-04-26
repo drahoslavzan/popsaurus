@@ -3,7 +3,7 @@ import { wrapStore } from 'webext-redux';
 import reducers from './store';
 import { populate, loading } from './store/data/actions';
 import ThesaurusApi from '../api/ThesaurusApi';
-import { IDialogMessage, sendMessage } from '../contentScripts/dialog/IMessage';
+import { IDialogMessage, sendMessage } from '../contentScripts/IMessage';
 
 const store = createStore(reducers);
 wrapStore(store);
