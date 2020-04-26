@@ -1,8 +1,14 @@
 
+export interface IDictRecord {
+	term: string;
+	similarity: number;
+}
+
 export interface IDefinition {
 	pos: string;
 	definition: string;
-	synonyms: string[];
+	synonyms: IDictRecord[];
+	antonyms: IDictRecord[];
 }
 
 export interface ISearchTerm {
@@ -12,9 +18,10 @@ export interface ISearchTerm {
 
 const getApiUrl = (word: string) => `https://tuna.thesaurus.com/pageData/${word}`;
 
-function processSynonyms(synonyms: any[]) {
-    synonyms.sort((a, b) => parseInt(a.similarity, 10) > parseInt(b.similarity, 10) ? -1 : 1);
-    return synonyms.map(s => s.term);
+function processDictRecs(synonyms: any[]): IDictRecord[] {
+    const s = synonyms.map(s => ({ term: s.term, similarity: parseInt(s.similarity, 10) })) as IDictRecord[];
+	s.sort((a, b) => a.similarity === b.similarity ? a.term.localeCompare(b.term) : a.similarity > b.similarity ? -1 : 1);
+	return s;
 }
 
 function processData(data: any): IDefinition[] {
@@ -29,7 +36,7 @@ function processData(data: any): IDefinition[] {
     const definitions = defs.map((d: any) => ({
         pos: d.pos,
         definition: d.definition,
-        synonyms: processSynonyms(d.synonyms)
+        synonyms: processDictRecs(d.synonyms)
 	}));
 
     return definitions;
