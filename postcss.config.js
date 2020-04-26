@@ -27,7 +27,7 @@ const cssnanoConfig = cssnano({
 module.exports = {
   plugins: [
     tailwindcss("./tailwind.config.js"),
-    require("autoprefixer"),
+	require("autoprefixer"),
     ...(process.env.NODE_ENV === "production"
       ? [postCssConfig, cssnanoConfig]
       : [])

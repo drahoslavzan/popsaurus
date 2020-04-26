@@ -9,6 +9,7 @@ const locateContentScripts = require('./utils/locateContentScripts');
 
 const sourceRootPath = path.join(__dirname, 'src');
 const contentScriptsPath = path.join(sourceRootPath, 'ts', 'contentScripts');
+const buildRootPath = path.join(__dirname, 'build');
 const distRootPath = path.join(__dirname, 'dist');
 const nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 const webBrowser = process.env.WEB_BROWSER ? process.env.WEB_BROWSER : 'chrome';
@@ -62,7 +63,7 @@ module.exports = {
 				test: /\.(jpg|jpeg|png|gif|svg)?$/,
 			},
 			{
-				from: path.join(sourceRootPath, 'css', 'styles.css'),
+				from: path.join(buildRootPath, 'css', 'styles.css'),
 				to: path.join(distRootPath, 'styles.css'),
 				toType: 'file',
 			},
