@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development webpack -d",
-		"prod": "cross-env NODE_ENV=production webpack -p",
 		"watch": "cross-env NODE_ENV=watch webpack -d",
+		"prod": "cross-env NODE_ENV=production npm run build:styles && webpack -p",
 		"build:styles": "npx postcss src/css/tailwind.css -o build/css/styles.css -c postcss.config.js",
 		"clean": "rm -rf ./dist",
 		"clean:all": "rm -rf ./dist && rm -rf ./coverage && rm -rf ./node_modules",
