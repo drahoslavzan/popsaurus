@@ -12,7 +12,6 @@ export interface IDialogProps {
 }
 
 // TODO: Font is white - https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
-// TODO: Center spinner
 
 const Dialog = (props: IDialogProps) => {
 	const targetRef = React.useRef<HTMLDivElement>(null);
