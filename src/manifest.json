@@ -26,9 +26,11 @@
 	"content_scripts": [
 		{
 			"js": ["dialog.js"],
-			"css": ["styles.css"],
 			"matches": ["*://*/*"]
 		}
+	],
+	"web_accessible_resources": [
+		"styles.css"
 	],
 	"manifest_version": 2
 }

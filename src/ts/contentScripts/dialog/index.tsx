@@ -9,12 +9,13 @@ import { createDomAnchor, removeDomAnchor } from '../../scripts/dom';
 
 const id = uuid();
 const store = new Store();
+const styles = chrome.extension.getURL('styles.css');
 
 chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
 	switch(request.dialog) {
 	case 'OPEN':
 		removeDomAnchor(id);
-		const elem = createDomAnchor(id, 'b9a35604-4a32-4a0b-80e5-2ff7a7e67e9a');
+		const elem = createDomAnchor(id, styles);
 		await store.ready();
 		ReactDOM.render(
 			<Provider store={store}>
