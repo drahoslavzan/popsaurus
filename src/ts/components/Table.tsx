@@ -1,11 +1,33 @@
 import React from 'react';
-import { IDefinition } from '../api/ThesaurusApi';
+import { IDefinition, IDictRecord } from '../api/ThesaurusApi';
 
 export interface ITableProps {
 	definitions: IDefinition[],
 }
 
+interface IButton {
+	label: string;
+	selected: boolean;
+	onClick(): void;
+}
+
+interface IDictf {
+	[key: string]: IDictRecord[]
+}
+
+const Button = (props: IButton) => {
+	const shade = props.selected ? 500 : 300;
+
+	return (
+		<button onClick={props.onClick} className={`px-4 focus:outline-none bg-indigo-${shade} p-2 rounded-full text-white hover:bg-indigo-${shade - 100} m-2`}>{props.label}</button>
+	);
+}
+
 const Table = (props: ITableProps) => {
+	const [dictf, setDictf] = React.useState('synonyms');
+	const [fsSel, setFsSel] = React.useState(true);
+	const [faSel, setFaSel] = React.useState(false);
+
 	function getColor(similarity: number): string {
 		if (similarity >= 100) return "bg-yellow-500";
 		if (similarity <= 0) return "bg-yellow-100";
@@ -13,14 +35,29 @@ const Table = (props: ITableProps) => {
 		return `bg-yellow-${shade}`;
 	}
 
+	function handleDictf(f: 'synonyms' | 'antonyms') {
+		setDictf(f);
+		if (f === 'synonyms') {
+			setFsSel(true);
+			setFaSel(false);
+		} else {
+			setFsSel(false);
+			setFaSel(true);
+		}
+	}
+
 	return (
 		<>
+			<div className="flex justify-center">
+				<Button onClick={() => handleDictf('synonyms')} selected={fsSel} label="Synonyms" />
+				<Button onClick={() => handleDictf('antonyms')} selected={faSel} label="Antonyms" />
+			</div>
 			{props.definitions.map((d, i) => (
-				<div key={`${d.definition}-${i}`} className={i > 0 ? "pt-4" : undefined}>
+				<div key={`${d.definition}-${i}`} className="pt-4">
 					<span className="text-lg font-bold">{d.definition}</span>
 					<span className="text-sm italic pl-4">({d.pos})</span>
 					<div className="grid grid-cols-2 pt-2">
-						{d.synonyms.map((s, i) => (
+						{((d as unknown) as IDictf)[dictf].map((s, i) => (
 							<div key={`${s.term}-${i}`} className={getColor(s.similarity)}>{s.term}</div>
 						))}
 					</div>

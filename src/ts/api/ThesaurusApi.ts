@@ -13,9 +13,11 @@ export interface IDefinition {
 
 export interface ISearchTerm {
 	term: string;
+	more: string;
 	definitons: IDefinition[];
 }
 
+const getMoreUrl = (word: string) => `https://www.thesaurus.com/browse/${word}`;
 const getApiUrl = (word: string) => `https://tuna.thesaurus.com/pageData/${word}`;
 
 function processDictRecs(synonyms: any[]): IDictRecord[] {
@@ -36,7 +38,8 @@ function processData(data: any): IDefinition[] {
     const definitions = defs.map((d: any) => ({
         pos: d.pos,
         definition: d.definition,
-        synonyms: processDictRecs(d.synonyms)
+        synonyms: processDictRecs(d.synonyms),
+        antonyms: processDictRecs(d.antonyms),
 	}));
 
     return definitions;
@@ -47,7 +50,7 @@ class ThesaurusApi {
 		const res = await fetch(getApiUrl(word));
 		const data = await res.text();
 		const defs = processData(JSON.parse(data));
-		return { term: word, definitons: defs };
+		return { term: word, definitons: defs, more: getMoreUrl(word) };
     }
 }
 

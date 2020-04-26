@@ -37,7 +37,14 @@ const Dialog = (props: IDialogProps) => {
 
 	function content() {
 		if (props.loading) return <Spinner />;
-		return props.search ? <Table definitions={props.search.definitons} /> : null;
+		return (
+			<div>
+				<Table definitions={props.search!.definitons!} />
+				<div className="flex pt-4 justify-end">
+					<a target="_blank" href={props.search!.more}>more</a>
+				</div>
+			</div>
+		);
 	}
 
 	const title = props.loading ? '' : props.search?.term;
