@@ -1,22 +1,22 @@
 import { Reducer} from 'redux';
 import { DataActions } from './actions';
-import { IDefinition } from '../../../api/ThesaurusApi';
+import { ISearchTerm } from '../../../api/ThesaurusApi';
 
 export interface IData {
-	loading: boolean,
-	definitions: IDefinition[];
+	loading: boolean;
+	search: ISearchTerm | null;
 }
 
 const initialState: IData = {
 	loading: false,
-	definitions: [],
+	search: null,
 };
 
 const reducer: Reducer<IData, DataActions> = (state = initialState, action) => {
 	const { payload } = action;
 	switch (action.type) {
 		case 'POPULATE':
-			return { ...state, loading: false, definitions: payload as IDefinition[] };
+			return { ...state, loading: false, search: payload as ISearchTerm };
 		case 'LOADING':
 			return { ...state, loading: payload as boolean };
 		default:

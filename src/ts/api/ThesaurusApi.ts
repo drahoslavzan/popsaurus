@@ -1,8 +1,13 @@
 
 export interface IDefinition {
-	pos: string,
-	definition: string,
-	synonyms: string[],
+	pos: string;
+	definition: string;
+	synonyms: string[];
+}
+
+export interface ISearchTerm {
+	term: string;
+	definitons: IDefinition[];
 }
 
 const getApiUrl = (word: string) => `https://tuna.thesaurus.com/pageData/${word}`;
@@ -31,10 +36,11 @@ function processData(data: any): IDefinition[] {
 }
 
 class ThesaurusApi {
-    async getDefinitions(word: string): Promise<IDefinition[]> {
+    async getDefinitions(word: string): Promise<ISearchTerm> {
 		const res = await fetch(getApiUrl(word));
 		const data = await res.text();
-		return processData(JSON.parse(data));
+		const defs = processData(JSON.parse(data));
+		return { term: word, definitons: defs };
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IDefinition } from '../../../api/ThesaurusApi';
+import { IDefinition } from '../api/ThesaurusApi';
 
 export interface ITableProps {
 	definitions: IDefinition[],

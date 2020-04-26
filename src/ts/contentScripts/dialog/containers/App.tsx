@@ -3,21 +3,27 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { ThemeProvider } from 'styled-components';
 import { IAppState } from '../../../background/store';
+import { ISearchTerm } from '../../../api/ThesaurusApi';
 import { themes, ThemeTypes } from '../../../components/styles/themes';
-import Dialog, { IDialogProps } from './Dialog';
+import Dialog from '../../../components/Dialog';
 
 interface IAppProps {
-	dialogId: string,
+	loading: boolean;
+	search: ISearchTerm | null;
 	theme: ThemeTypes;
 	dispatch: Dispatch;
-	dialogProps: IDialogProps,
+	onClose(): void;
 }
 
 class App extends React.Component<IAppProps> {
 	render() {
 		return (
 			<ThemeProvider theme={themes[this.props.theme]}>
-				<Dialog {...this.props.dialogProps} dialogId={this.props.dialogId} />
+				<Dialog
+					loading={this.props.loading}
+					search={this.props.search}
+					onClose={this.props.onClose}
+				/>
 			</ThemeProvider>
 		);
 	}
@@ -26,11 +32,8 @@ class App extends React.Component<IAppProps> {
 const mapStateToProps = (state: IAppState) => {
 	return {
 		theme: state.settings.theme,
-		dialogProps: {
-			dialogId: '',
-			loading: state.data.loading,
-			definitions: state.data.definitions,
-		},
+		loading: state.data.loading,
+		search: state.data.search,
 	};
 };
 

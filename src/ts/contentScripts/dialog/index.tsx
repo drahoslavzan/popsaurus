@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
 		ReactDOM.render(
 			<StyleSheetManager target={innerStyles}>
 				<Provider store={store}>
-					<App dialogId={id} />
+					<App onClose={() => removeDomAnchor(id)} />
 				</Provider>
 			</StyleSheetManager>
 			, elem);

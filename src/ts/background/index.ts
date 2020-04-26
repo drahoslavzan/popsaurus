@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	const api = new ThesaurusApi();
 
 	chrome.contextMenus.create({
-		title: "Synonyms for '%s'", 
+		title: "Thesaurus: %s", 
 		contexts:['selection'], 
 		onclick: async function(info, tab) {
 			const text = info.selectionText;
@@ -23,7 +23,7 @@ chrome.runtime.onInstalled.addListener(function() {
 				const defs = await dp;
 				store.dispatch(populate(defs));
 			} catch(e) {
-				alert(`Error getting synonyms for ${text}`);
+				alert(`Error getting data for '${text}'`);
 			}
 		}
 	});
