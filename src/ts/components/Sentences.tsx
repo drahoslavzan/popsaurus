@@ -7,8 +7,10 @@ export interface ISentencesProps {
 }
 
 const Sentences = (props: ISentencesProps) => {
+	const regex = new RegExp(props.word, "ig");
+
 	function makeSentence(s: string) {
-		return s.replace(props.word, () => `<b>${props.word}</b>`);
+		return s.replace(regex, (match) => `<b>${match}</b>`);
 	}
 
 	return (
