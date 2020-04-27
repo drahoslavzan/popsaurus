@@ -10,7 +10,7 @@ const Sentences = (props: ISentencesProps) => {
 	const regex = new RegExp(props.word, "ig");
 
 	function makeSentence(s: string) {
-		return s.replace(regex, (match) => `<b>${match}</b>`);
+		return s.replace(regex, match => `<b>${match}</b>`);
 	}
 
 	return (

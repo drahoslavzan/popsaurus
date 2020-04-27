@@ -5,9 +5,6 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import { IAppState } from '../background/store';
 import Content from './Content';
 
-// TODO: Disable modal -> show under word, also icon -> copy Power Thesaurus
-// TODO: Create Popup page
-
 export interface IDialogProps {
 	onClose(): void;
 }
