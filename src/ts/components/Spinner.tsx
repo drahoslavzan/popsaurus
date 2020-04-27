@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const Spinner = () => (
-	<div className="flex justify-center">
+	<div className="flex justify-center m-4">
 		<Loading className="ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16" />
 	</div>
 );

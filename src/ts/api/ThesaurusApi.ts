@@ -17,7 +17,7 @@ export interface IDefinition {
 }
 
 export interface ISearchTerm {
-	term: string;
+	word: string;
 	more: string;
 	pronunciation: IPronunciation;
 	definitons: IDefinition[];
@@ -58,7 +58,7 @@ class ThesaurusApi {
 		const defs = processData(data);
 		const pronun = data?.pronunciation;
 		return {
-			term: word,
+			word,
 			pronunciation: {
 				spell: pronun?.spell,
 				audio: pronun?.audio?.['audio/mpeg'],

@@ -43,6 +43,6 @@ chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
 
 const Body = styled('div')`
 	font-family: sans-serif;
-	font-size: 14px;
+	font-size: 15px;
 	color: black;
 `;

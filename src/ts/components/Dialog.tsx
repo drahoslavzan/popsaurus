@@ -2,21 +2,15 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import styled from 'styled-components';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-import { populate, loading } from '../background//store/data/actions';
-import Table from './Table';
-import ThesaurusApi, { ISearchTerm } from '../api/ThesaurusApi';
-import Spinner from './Spinner';
-
-export interface IDialogProps {
-	loading: boolean;
-	search: ISearchTerm | null;
-	onClose(): void;
-}
+import { IAppState } from '../background/store';
+import Content from './Content';
 
 // TODO: Disable modal -> show under word, also icon -> copy Power Thesaurus
 // TODO: Create Popup page
 
-const api = new ThesaurusApi();
+export interface IDialogProps {
+	onClose(): void;
+}
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = IDialogProps & PropsFromRedux;
@@ -42,32 +36,14 @@ const Dialog = (props: Props) => {
 		};
 	}, []);
 
-	async function handleWord(word: string) {
-		props.setLoading();
-		const search = await api.getDefinitions(word);
-		props.setSearch(search);
-	}
-
-	function content() {
-		if (props.loading) return <Spinner />;
-		return (
-			<div>
-				<Table onWord={handleWord} definitions={props.search!.definitons!} />
-				<div className="flex pt-4 justify-end">
-					<a target="_blank" href={props.search!.more}>more</a>
-				</div>
-			</div>
-		);
-	}
-
 	function playAudio(url: string) {
 		var audio = new Audio(url);
 		audio.play();
 	}
 
-	const audio = props.search?.pronunciation?.audio;
-	const title = props.loading ? '' : (<>
-		<span>{props.search?.term}</span>
+	const audio = props.loading ? null : props.audio;
+	const title = (<>
+		<span>{props.search}</span>
 		{audio ?
 			<span className="pl-2 inline-block align-middle">
 				<button onClick={() => playAudio(audio)}>
@@ -102,20 +78,21 @@ const Dialog = (props: Props) => {
 					</div>
 				</div>
 
-				<ModalContent className="px-4 py-4 overflow-y-auto">
-					{content()}
-				</ModalContent>
+				<Content />
 			</div>
 		</Modal>
 	);
 }
 
-const dispatchProps = {
-	setLoading: () => loading(),
-	setSearch: (search: ISearchTerm) => populate(search),
+const mapStateToProps = (state: IAppState) => {
+	return {
+		search: state.data.search,
+		loading: state.data.loading,
+		audio: state.data.audio,
+	};
 };
 
-const connector = connect(null, dispatchProps);
+const connector = connect(mapStateToProps);
 
 export default connector(Dialog);
 
@@ -123,8 +100,4 @@ const Modal = styled('div')`
 	overflow: hidden;
 	transition: opacity 0.25s ease;
 	z-index: 2147483647;
-`;
-
-const ModalContent = styled('div')`
-	max-height: 45vh;
 `;
