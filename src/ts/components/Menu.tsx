@@ -14,12 +14,13 @@ interface IButton {
 }
 
 const Button = (props: IButton) => {
-	// PurgeCSS:
-	// bg-indigo-200 bg-indigo-300 bg-indigo-400 bg-indigo-500
-	const shade = props.selected ? 500 : 300;
-
 	return (
-		<button onClick={props.onClick} className={`px-4 focus:outline-none bg-indigo-${shade} p-2 rounded-full text-white hover:bg-indigo-${shade - 100} m-2`}>{props.label}</button>
+		<li className="flex-1 mr-2">
+			{props.selected
+				? <button onClick={props.onClick} className="text-center block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white">{props.label}</button>
+				: <button onClick={props.onClick} className="text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4">{props.label}</button>
+			}
+		</li>
 	);
 }
 
@@ -29,11 +30,11 @@ const Menu = (props: IMenuProps) => {
 	}
 
 	return (
-		<div className="flex justify-center">
+		<ul className="flex">
 			<Button onClick={() => handleSelected('synonyms')} selected={props.selection === 'synonyms'} label="Synonyms" />
 			<Button onClick={() => handleSelected('antonyms')} selected={props.selection === 'antonyms'} label="Antonyms" />
 			<Button onClick={() => handleSelected('sentences')} selected={props.selection === 'sentences'} label="Sentences" />
-		</div>
+		</ul>
 	);
 };
 
