@@ -8,7 +8,7 @@ export interface ISentencesProps {
 
 const Sentences = (props: ISentencesProps) => {
 	function makeSentence(s: string) {
-		return s.replace(props.word, () => `<strong>${props.word}</strong>`);
+		return s.replace(props.word, () => `<b>${props.word}</b>`);
 	}
 
 	return (
