@@ -15,18 +15,16 @@ interface IAppProps {
 	onClose(): void;
 }
 
-class App extends React.Component<IAppProps> {
-	render() {
-		return (
-			<ThemeProvider theme={themes[this.props.theme]}>
-				<Dialog
-					loading={this.props.loading}
-					search={this.props.search}
-					onClose={this.props.onClose}
-				/>
-			</ThemeProvider>
-		);
-	}
+const App = (props: IAppProps) => {
+	return (
+		<ThemeProvider theme={themes[props.theme]}>
+			<Dialog
+				loading={props.loading}
+				search={props.search}
+				onClose={props.onClose}
+			/>
+		</ThemeProvider>
+	);
 }
 
 const mapStateToProps = (state: IAppState) => {

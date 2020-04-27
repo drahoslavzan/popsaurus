@@ -3,6 +3,7 @@ import { IDefinition, IDictRecord } from '../api/ThesaurusApi';
 
 export interface ITableProps {
 	definitions: IDefinition[],
+	onWord(word: string): void;
 }
 
 interface IButton {
@@ -62,7 +63,11 @@ const Table = (props: ITableProps) => {
 					<span className="text-sm italic pl-4">({d.pos})</span>
 					<div className="grid grid-cols-2 pt-2">
 						{((d as unknown) as IDictf)[dictf].map((s, i) => (
-							<div key={`${s.term}-${i}`} className={getColor(s.similarity)}>{s.term}</div>
+							<div key={`${s.term}-${i}`} className={getColor(s.similarity)}>
+								<button className="focus:outline-none" onClick={() => props.onWord(s.term)}>
+									{s.term}
+								</button>
+							</div>
 						))}
 					</div>
 				</div>

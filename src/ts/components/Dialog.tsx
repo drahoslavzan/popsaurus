@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import styled from 'styled-components';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { populate, loading } from '../background//store/data/actions';
 import Table from './Table';
-import { ISearchTerm } from '../api/ThesaurusApi';
+import ThesaurusApi, { ISearchTerm } from '../api/ThesaurusApi';
 import Spinner from './Spinner';
 
 export interface IDialogProps {
@@ -14,7 +16,12 @@ export interface IDialogProps {
 // TODO: Disable modal -> show under word, also icon -> copy Power Thesaurus
 // TODO: Create Popup page
 
-const Dialog = (props: IDialogProps) => {
+const api = new ThesaurusApi();
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = IDialogProps & PropsFromRedux;
+
+const Dialog = (props: Props) => {
 	const targetRef = React.useRef<HTMLDivElement>(null);
 
 	React.useEffect(() => {
@@ -35,11 +42,17 @@ const Dialog = (props: IDialogProps) => {
 		};
 	}, []);
 
+	async function handleWord(word: string) {
+		props.setLoading();
+		const search = await api.getDefinitions(word);
+		props.setSearch(search);
+	}
+
 	function content() {
 		if (props.loading) return <Spinner />;
 		return (
 			<div>
-				<Table definitions={props.search!.definitons!} />
+				<Table onWord={handleWord} definitions={props.search!.definitons!} />
 				<div className="flex pt-4 justify-end">
 					<a target="_blank" href={props.search!.more}>more</a>
 				</div>
@@ -97,7 +110,14 @@ const Dialog = (props: IDialogProps) => {
 	);
 }
 
-export default Dialog;
+const dispatchProps = {
+	setLoading: () => loading(),
+	setSearch: (search: ISearchTerm) => populate(search),
+};
+
+const connector = connect(null, dispatchProps);
+
+export default connector(Dialog);
 
 const Modal = styled('div')`
 	overflow: hidden;
