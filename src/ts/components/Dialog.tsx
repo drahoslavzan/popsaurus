@@ -11,7 +11,8 @@ export interface IDialogProps {
 	onClose(): void;
 }
 
-// TODO: Font is white, body still scrolling under modal -> https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
+// TODO: Disable modal -> show under word, also icon -> copy Power Thesaurus
+// TODO: Create Popup page
 
 const Dialog = (props: IDialogProps) => {
 	const targetRef = React.useRef<HTMLDivElement>(null);
@@ -46,7 +47,25 @@ const Dialog = (props: IDialogProps) => {
 		);
 	}
 
-	const title = props.loading ? '' : props.search?.term;
+	function playAudio(url: string) {
+		var audio = new Audio(url);
+		audio.play();
+	}
+
+	const audio = props.search?.pronunciation?.audio;
+	const title = props.loading ? '' : (<>
+		<span>{props.search?.term}</span>
+		{audio ?
+			<span className="pl-2 inline-block align-middle">
+				<button onClick={() => playAudio(audio)}>
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.0"  width="18" height="18" viewBox="0 0 75 75">
+						<path d="M39.389,13.769 L22.235,28.606 L6,28.606 L6,47.699 L21.989,47.699 L39.389,62.75 L39.389,13.769z" style={{ stroke: '#111', strokeWidth: 5, strokeLinejoin: 'round', fill: '#111' }} />
+						<path d="M48,27.6a19.5,19.5 0 0 1 0,21.4M55.1,20.5a30,30 0 0 1 0,35.6M61.6,14a38.8,38.8 0 0 1 0,48.6" style={{ fill: 'none', stroke: '#111', strokeWidth: 5, strokeLinecap: 'round' }} />
+					</svg>
+				</button>
+			</span>
+		: null}
+	</>);
 
 	return (
 		<Modal ref={targetRef} className="fixed w-full h-full top-0 left-0 flex items-center justify-center">

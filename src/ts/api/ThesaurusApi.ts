@@ -4,6 +4,11 @@ export interface IDictRecord {
 	similarity: number;
 }
 
+export interface IPronunciation {
+	spell: string;
+	audio: string;
+}
+
 export interface IDefinition {
 	pos: string;
 	definition: string;
@@ -14,6 +19,7 @@ export interface IDefinition {
 export interface ISearchTerm {
 	term: string;
 	more: string;
+	pronunciation: IPronunciation;
 	definitons: IDefinition[];
 }
 
@@ -27,9 +33,9 @@ function processDictRecs(synonyms: any[]): IDictRecord[] {
 }
 
 function processData(data: any): IDefinition[] {
-	if (!data || !data.data) return [];
+	if (!data) return [];
 
-    const dd = data.data.definitionData;
+    const dd = data.definitionData;
     if (!dd) return [];
 
     const defs = dd.definitions;
@@ -48,9 +54,18 @@ function processData(data: any): IDefinition[] {
 class ThesaurusApi {
     async getDefinitions(word: string): Promise<ISearchTerm> {
 		const res = await fetch(getApiUrl(word));
-		const data = await res.text();
-		const defs = processData(JSON.parse(data));
-		return { term: word, definitons: defs, more: getMoreUrl(word) };
+		const data = JSON.parse(await res.text())?.data;
+		const defs = processData(data);
+		const pronun = data?.pronunciation;
+		return {
+			term: word,
+			pronunciation: {
+				spell: pronun?.spell,
+				audio: pronun?.audio?.['audio/mpeg'],
+			},
+			definitons: defs,
+			more: getMoreUrl(word)
+		};
     }
 }
 

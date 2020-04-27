@@ -2,7 +2,7 @@ import React from 'react';
 import { v4 as uuid } from 'uuid';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { StyleSheetManager } from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { Store } from 'webext-redux';
 import App from './containers/App';
 import { IDialogMessage } from '../IMessage';
@@ -25,10 +25,12 @@ chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
 		ReactDOM.render(
 			<StyleSheetManager target={innerStyles}>
 				<Provider store={store}>
-					<App onClose={() => {
-						ReactDOM.unmountComponentAtNode(elem);
-						removeDomAnchor(id);
-					}} />
+					<Body>
+						<App onClose={() => {
+							ReactDOM.unmountComponentAtNode(elem);
+							removeDomAnchor(id);
+						}} />
+					</Body>
 				</Provider>
 			</StyleSheetManager>
 			, elem);
@@ -38,3 +40,9 @@ chrome.runtime.onMessage.addListener(async function(request: IDialogMessage) {
 		break;
 	}
 });
+
+const Body = styled('div')`
+	font-family: sans-serif;
+	font-size: 14px;
+	color: black;
+`;
