@@ -6,6 +6,8 @@ export interface ISentencesProps {
 	sentences: ISentence[];
 }
 
+const Divider = () => <hr className="border-solid border-1 border-gray-600 mt-4" />;
+
 const Sentences = (props: ISentencesProps) => {
 	const regex = new RegExp(props.word, "ig");
 
@@ -15,10 +17,11 @@ const Sentences = (props: ISentencesProps) => {
 
 	return (
 		<div>
+			{props.sentences.length > 0 ? <Divider /> : null}
 			{props.sentences.map((s, i) => (
 				<div key={`${s.sentence}-${i}`} className="pt-4 text-base">
 					<span dangerouslySetInnerHTML={{ __html : makeSentence(s.sentence) }} />
-					<hr className="border-solid border-1 border-gray-600 mt-4" />
+					<Divider />
 				</div>
 			))}
 		</div>

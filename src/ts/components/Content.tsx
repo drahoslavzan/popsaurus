@@ -41,14 +41,14 @@ const Content = (props: PropsFromRedux) => {
 	}
 
 	return props.loading ? <Spinner /> : (
-		<ModalContent className="px-4 py-4 overflow-y-auto">
+		<ModalContent className="px-4 py-4 w-full overflow-y-auto">
 			<Menu selection={sel} onSelection={handleSelection} />
 			{sel === 'sentences'
 				? props.sens === null
 					? <Spinner />
 					: <Sentences word={props.search} sentences={props.sens?.sentenes || []} />
 				: <Synonyms onWord={handleWord} selection={sel} definitions={props.terms?.definitons || []} />}
-			<div className="flex pt-4 justify-end">
+			<div className="flex pt-4 justify-end text-blue-500">
 				<a target="_blank" href={props.more as string}>more</a>
 			</div>
 		</ModalContent>
@@ -78,4 +78,18 @@ export default connector(Content);
 const ModalContent = styled('div')`
 	max-height: 40vh;
 	height: 40vh;
+
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+		border-radius: 10px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+	}
 `;
