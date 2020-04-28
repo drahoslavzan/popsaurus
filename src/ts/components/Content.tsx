@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import { IAppState } from '../background/store';
 import { search, populateSens, populateTerm } from '../background/store/data/actions';
 import ThesaurusApi, { ISearchTerm } from '../api/ThesaurusApi';
-import YourDictionaryApi from '../api/YourDictionaryApi';
+import YourDictionaryApi, { ISearchSentences } from '../api/YourDictionaryApi';
 import Synonyms from './Synonyms';
 import Sentences from './Sentences';
 import Spinner from './Spinner';
 import Menu, { Selection } from './Menu';
-import { ISearchSentences } from '../api/YourDictionaryApi';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
