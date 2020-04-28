@@ -4,7 +4,7 @@ export const createDomAnchor = (id: string, style?: string): ShadowRoot => {
 	const anchor = document.createElement('div');
 	anchor.id = id;
 	const shadow = anchor.attachShadow({mode: "open"});
-	document.body.insertBefore(anchor, document.body.nextSibling);
+	document.body.appendChild(anchor);
 	if (style) {
 		const linkElem = document.createElement('link');
 		linkElem.setAttribute('rel', 'stylesheet');
