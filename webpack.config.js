@@ -22,7 +22,6 @@ const extensionReloader = nodeEnv === 'watch' ? new ExtensionReloader({
 	manifest: path.join(sourceRootPath, 'manifest.json'),
 	entries: {
 		background: 'background',
-		extensionPage: ['popup'],
 		contentScript: Object.keys(contentScripts),
 	}
 }) : () => { this.apply = () => { } };
@@ -33,7 +32,6 @@ module.exports = {
 	watch: nodeEnv === 'watch',
 	entry: {
 		background: path.join(sourceRootPath, 'ts', 'background', 'index.ts'),
-		popup: path.join(sourceRootPath, 'ts', 'popup', 'index.tsx'),
 		...contentScripts,
 	},
 	output: {
@@ -50,13 +48,6 @@ module.exports = {
 	},
 	plugins: [
 		new CheckerPlugin(),
-		new HtmlWebpackPlugin({
-			template: path.join(sourceRootPath, 'html', 'popup.html'),
-			inject: 'body',
-			filename: 'popup.html',
-			title: 'Web Extension Starter - Popup Page',
-			chunks: ['popup'],
-		}),
 		new CopyWebpackPlugin([
 			{
 				from: path.join(sourceRootPath, 'assets'),

@@ -19,9 +19,8 @@
 		"persistent": true
 	},
 	"browser_action": {
-		"default_title": "PopSaurus",
-		"default_icon": "assets/icon-48.png",
-		"default_popup": "popup.html"
+		"default_title": "PopSaurus:\nLookup synonyms, antonyms and sentences for the selected word.\n\nStart by selecting a word then right click and pick the item from the context menu.\n\n",
+		"default_icon": "assets/icon-48.png"
 	},
 	"content_scripts": [
 		{
