@@ -7,18 +7,16 @@ export interface IData {
 	search: string;
 	loading: boolean;
 	audio: string | null;
-	more: string | null;
-	terms: ISearchTerm | null;
-	sens: ISearchSentences | null;
+	term: ISearchTerm | null;
+	sen: ISearchSentences | null;
 }
 
 const initialState: IData = {
 	search: '',
 	loading: false,
 	audio: null,
-	more: null,
-	terms: null,
-	sens: null,
+	term: null,
+	sen: null,
 };
 
 const reducer: Reducer<IData, DataActions> = (state = initialState, action) => {
@@ -26,12 +24,12 @@ const reducer: Reducer<IData, DataActions> = (state = initialState, action) => {
 	switch (action.type) {
 		case 'POPULATE_TERM':
 			const st = payload as ISearchTerm;
-			return { ...state, loading: false, terms: st, audio: st.pronunciation?.audio, more: st.more };
+			return { ...state, loading: false, term: st, audio: st.pronunciation?.audio };
 		case 'POPULATE_SENS':
 			const ss = payload as ISearchSentences;
-			return { ...state, sens: ss, more: ss.more };
+			return { ...state, sen: ss };
 		case 'SEARCH':
-			return { ...state, loading: true, terms: null, sens: null, audio: null, more: null, search: payload as string };
+			return { ...state, loading: true, term: null, sen: null, audio: null, more: null, search: payload as string };
 		default:
 			return state;
 	}

@@ -2,7 +2,7 @@ import React from 'react';
 import { ISentence } from '../api/YourDictionaryApi';
 
 export interface ISentencesProps {
-	word: string,
+	word: string;
 	sentences: ISentence[];
 }
 

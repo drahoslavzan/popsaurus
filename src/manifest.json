@@ -1,7 +1,7 @@
 {
 	"name": "PopSaurus",
-	"author": "Dave Maxwell",
-	"version": "1.0.0",
+	"author": "Drahoslav Zan",
+	"version": "1.0.1",
 	"description": "Thesaurus lookup using a pop-up window.",
 	"icons": {
 		"128": "assets/icon-128.png"

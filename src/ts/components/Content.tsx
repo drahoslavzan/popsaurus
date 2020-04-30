@@ -17,6 +17,7 @@ const ydApi = new YourDictionaryApi();
 
 const Content = (props: PropsFromRedux) => {
 	const [sel, setSel] = React.useState<Selection>('synonyms');
+	const more = sel === 'sentences' ? props.sen?.more : props.term?.more;
 
 	function fetchData(search: string) {
 		thesApi.getDefinitions(search).then(r => {
@@ -44,16 +45,16 @@ const Content = (props: PropsFromRedux) => {
 		<ModalContent className="px-4 py-4 w-full overflow-y-auto">
 			<Menu selection={sel} onSelection={handleSelection} />
 			{sel === 'sentences'
-				? props.sens === null
+				? props.sen === null
 					? <Spinner />
-					: <Sentences word={props.search} sentences={props.sens?.sentenes || []} />
-				: <Synonyms onWord={handleWord} selection={sel} definitions={props.terms?.definitons || []} />}
+					: <Sentences word={props.search} sentences={props.sen?.sentenes || []} />
+				: <Synonyms onWord={handleWord} selection={sel} definitions={props.term?.definitons || []} />}
 			<div className="flex pt-4 justify-end text-blue-500">
-				<a target="_blank" href={props.more as string}>more</a>
+				<a target="_blank" href={more as string}>more</a>
 			</div>
 		</ModalContent>
 	);
-}
+};
 
 const dispatchProps = {
 	setSearch: (word: string) => search(word),
@@ -65,9 +66,8 @@ const mapStateToProps = (state: IAppState) => {
 	return {
 		search: state.data.search,
 		loading: state.data.loading,
-		terms: state.data.terms,
-		sens: state.data.sens,
-		more: state.data.more,
+		term: state.data.term,
+		sen: state.data.sen,
 	};
 };
 
