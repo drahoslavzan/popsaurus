@@ -1,6 +1,4 @@
-<div align="center">
 # PopSaurus
-</div>
 
 PopSaurus (PS): **Thesaurus lookup using a pop-up window.**
 
